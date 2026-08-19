@@ -77,6 +77,24 @@ h1 {
   font-size: 12px;
 }
 
+.game-switch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.game-switch button {
+  background: rgba(16, 27, 36, 0.72);
+  font-weight: 800;
+}
+
+.game-switch button.active {
+  background: linear-gradient(135deg, rgba(53, 242, 127, 0.95), rgba(12, 184, 90, 0.95));
+  color: #031006;
+  border-color: transparent;
+}
+
 .status-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -239,6 +257,7 @@ button:hover {
   .hero { display: block; }
   .badge { display: inline-block; margin-top: 14px; }
   .status-grid { grid-template-columns: 1fr; }
+  .game-switch { grid-template-columns: 1fr; }
   .prompt { grid-template-columns: auto 1fr; }
   .prompt button { grid-column: 1 / -1; }
   .submit-panel { display: block; }

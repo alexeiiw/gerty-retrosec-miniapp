@@ -1,15 +1,17 @@
-# Gerty Crack: RetroSec Mini App
+# Gerty Games Mini App
 
-Telegram Mini App estatica basada en el modo `Gerty Crack RetroSec` de GERTY.
+Telegram Mini App estatica basada en los juegos `Gerty Crack RetroSec` y `Cripto Clasico` de GERTY.
 
 ## Que Incluye
 
 - Juego 100% estatico con `index.html`, `style.css` y `app.js`.
-- Cinco misiones ficticias tipo terminal retro.
-- Comandos simulados: `ls`, `cat`, `strings`, `grep`, `nmap`, `binwalk`, `john`, `hydra` y `submit`.
-- Progreso guardado en `localStorage`.
+- Selector interno con dos juegos: `RetroSec Lab` y `Cripto Clasico`.
+- RetroSec incluye cinco misiones ficticias tipo terminal retro.
+- RetroSec simula comandos: `ls`, `cat`, `strings`, `grep`, `nmap`, `binwalk`, `john`, `hydra` y `submit`.
+- Cripto Clasico incluye retos de Cesar, Atbash, Hex, Base64, Reversa + Cesar, Vigenere y Multicapa.
+- Progreso separado en `localStorage` para cada juego.
 - Compatibilidad con Telegram Mini Apps mediante `telegram-web-app.js`.
-- Boton para reiniciar todo el progreso local del juego.
+- Boton para reiniciar el progreso local del juego activo.
 
 ## Publicacion En GitHub Pages
 
@@ -23,7 +25,7 @@ Telegram Mini App estatica basada en el modo `Gerty Crack RetroSec` de GERTY.
 
 El bot de prueba debe enviar un boton con `web_app.url` apuntando a la URL de GitHub Pages.
 
-La app no contiene tokens ni secretos. El bot solo abre la Mini App; el progreso se guarda localmente en el navegador con `localStorage`.
+La app no contiene tokens ni secretos. El bot solo abre la Mini App; el progreso de ambos juegos se guarda localmente en el navegador con `localStorage`.
 
 ## Seguridad
 
