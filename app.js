@@ -66,7 +66,7 @@ const missionLabel = document.querySelector("#missionLabel");
 const solvedLabel = document.querySelector("#solvedLabel");
 const modeLabel = document.querySelector("#modeLabel");
 const userBadge = document.querySelector("#userBadge");
-const sendResult = document.querySelector("#sendResult");
+const resetProgress = document.querySelector("#resetProgress");
 
 let state = loadState();
 
@@ -203,23 +203,14 @@ function setupTelegram() {
   else if (user?.first_name) userBadge.textContent = user.first_name;
 }
 
-function sendTelegramResult() {
-  const payload = {
-    app: "gerty-retrosec-miniapp",
-    solved: state.solved.length,
-    total: missions.length,
-    mission: state.mission,
-    completed: state.solved.length >= missions.length,
-    history: state.history.slice(-8)
-  };
-
-  const tg = window.Telegram?.WebApp;
-  if (tg?.sendData) {
-    tg.sendData(JSON.stringify(payload));
-    return;
-  }
-
-  write("[LOCAL RESULT]\n" + JSON.stringify(payload, null, 2));
+function resetGame() {
+  state = normalizeState({ mission: 1, solved: [], history: [] });
+  saveState();
+  output.textContent = "";
+  refreshStatus();
+  write("[RESET]");
+  write("RetroSec vuelve a la mision 1.");
+  write(statusText());
 }
 
 form.addEventListener("submit", (event) => {
@@ -233,7 +224,7 @@ document.querySelectorAll("[data-cmd]").forEach((button) => {
   button.addEventListener("click", () => runCommand(button.dataset.cmd));
 });
 
-sendResult.addEventListener("click", sendTelegramResult);
+resetProgress.addEventListener("click", resetGame);
 
 setupTelegram();
 refreshStatus();

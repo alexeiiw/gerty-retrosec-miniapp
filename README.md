@@ -1,6 +1,6 @@
 # Gerty Crack: RetroSec Mini App
 
-Demo estatica de Telegram Mini App basada en el modo `Gerty Crack RetroSec` de GERTY.
+Telegram Mini App estatica basada en el modo `Gerty Crack RetroSec` de GERTY.
 
 ## Que Incluye
 
@@ -9,7 +9,7 @@ Demo estatica de Telegram Mini App basada en el modo `Gerty Crack RetroSec` de G
 - Comandos simulados: `ls`, `cat`, `strings`, `grep`, `nmap`, `binwalk`, `john`, `hydra` y `submit`.
 - Progreso guardado en `localStorage`.
 - Compatibilidad con Telegram Mini Apps mediante `telegram-web-app.js`.
-- Boton para enviar resultado con `Telegram.WebApp.sendData()` cuando se abre dentro de Telegram.
+- Boton para reiniciar todo el progreso local del juego.
 
 ## Publicacion En GitHub Pages
 
@@ -23,7 +23,7 @@ Demo estatica de Telegram Mini App basada en el modo `Gerty Crack RetroSec` de G
 
 El bot de prueba debe enviar un boton con `web_app.url` apuntando a la URL de GitHub Pages.
 
-La app no contiene tokens ni secretos. Si se abre fuera de Telegram funciona en modo local.
+La app no contiene tokens ni secretos. El bot solo abre la Mini App; el progreso se guarda localmente en el navegador con `localStorage`.
 
 ## Seguridad
 
