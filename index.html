@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerty Crack: RetroSec Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Telegram Mini App Demo</p>
+        <h1>Gerty Crack: RetroSec Lab</h1>
+        <p class="subtitle">Misiones ficticias para practicar comandos tipo terminal sin tocar sistemas reales.</p>
+      </div>
+      <div class="badge" id="userBadge">LOCAL</div>
+    </section>
+
+    <section class="status-grid" aria-label="Estado del juego">
+      <div class="card"><span>Mision</span><strong id="missionLabel">1/5</strong></div>
+      <div class="card"><span>Completadas</span><strong id="solvedLabel">0</strong></div>
+      <div class="card"><span>Modo</span><strong id="modeLabel">Static</strong></div>
+    </section>
+
+    <section class="terminal" aria-label="Terminal RetroSec">
+      <div class="terminal-top">
+        <span class="dot red"></span>
+        <span class="dot amber"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">retrosec@gerty:~</span>
+      </div>
+      <pre id="output" class="output" aria-live="polite"></pre>
+      <form id="commandForm" class="prompt">
+        <span>$</span>
+        <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="Escribe: ls, cat readme.txt, submit CLAVE">
+        <button type="submit">Run</button>
+      </form>
+    </section>
+
+    <section class="actions" aria-label="Comandos rapidos">
+      <button data-cmd="status">status</button>
+      <button data-cmd="ls">ls</button>
+      <button data-cmd="cat readme.txt">cat readme.txt</button>
+      <button data-cmd="strings cartridge.gb">strings</button>
+      <button data-cmd="grep KEY cartridge.gb">grep KEY</button>
+      <button data-cmd="nmap arcade.local">nmap</button>
+      <button data-cmd="john hash.txt">john</button>
+      <button data-cmd="hydra login">hydra</button>
+      <button data-cmd="reset">reset</button>
+    </section>
+
+    <section class="submit-panel">
+      <button id="sendResult" class="primary">Enviar resultado a Telegram</button>
+      <p>Si se abre fuera de Telegram, el resultado queda solo local.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

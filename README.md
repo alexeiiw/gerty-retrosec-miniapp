@@ -1,67 +1,30 @@
-# CriptoNFT - Plataforma Descentralizada de NFTs
+# Gerty Crack: RetroSec Mini App
 
-CriptoNFT es una solución integral para la creación, compra y transferencia de Tokens No Fungibles (NFTs) basada en la tecnología de Lisk. El proyecto se divide en dos componentes principales: una aplicación blockchain personalizada y un frontend interactivo en React.
+Demo estatica de Telegram Mini App basada en el modo `Gerty Crack RetroSec` de GERTY.
 
-## Estructura del Proyecto
+## Que Incluye
 
-- `blockchain_app/`: Contiene la lógica del nodo de la blockchain, incluyendo el módulo personalizado de NFTs y un plugin de API personalizada.
-- `frontend_app/`: Una aplicación web moderna construida con React para interactuar con la blockchain de manera intuitiva.
+- Juego 100% estatico con `index.html`, `style.css` y `app.js`.
+- Cinco misiones ficticias tipo terminal retro.
+- Comandos simulados: `ls`, `cat`, `strings`, `grep`, `nmap`, `binwalk`, `john`, `hydra` y `submit`.
+- Progreso guardado en `localStorage`.
+- Compatibilidad con Telegram Mini Apps mediante `telegram-web-app.js`.
+- Boton para enviar resultado con `Telegram.WebApp.sendData()` cuando se abre dentro de Telegram.
 
-## Requisitos Previos
+## Publicacion En GitHub Pages
 
-- **Node.js**: Versión 12.x o superior.
-- **Yarn** o **npm**.
+1. En GitHub, abrir `Settings > Pages`.
+2. Seleccionar `Deploy from a branch`.
+3. Usar rama `main` y carpeta `/root`.
+4. La URL quedara similar a:
+   `https://alexeiiw.github.io/gerty-retrosec-miniapp/`
 
-## Instalación y Configuración
+## Uso Como Mini App
 
-### 1. Configuración de la Blockchain
+El bot de prueba debe enviar un boton con `web_app.url` apuntando a la URL de GitHub Pages.
 
-Navega al directorio de la aplicación blockchain e instala las dependencias:
+La app no contiene tokens ni secretos. Si se abre fuera de Telegram funciona en modo local.
 
-```bash
-cd blockchain_app
-npm install
-```
+## Seguridad
 
-Para iniciar el nodo de la blockchain:
-
-```bash
-node nft_module/index.js
-```
-*Nota: El archivo `nft_module/index.js` es el punto de entrada que registra el módulo NFT y los plugins.*
-
-### 2. Configuración del Frontend
-
-Navega al directorio del frontend e instala las dependencias:
-
-```bash
-cd frontend_app
-npm install
-```
-
-Para iniciar la aplicación de desarrollo:
-
-```bash
-npm start
-```
-La aplicación estará disponible en `http://localhost:3000`.
-
-## Funcionalidades Principales
-
-- **Creación de NFTs**: Los usuarios pueden acuñar nuevos NFTs definiendo un valor inicial y un margen mínimo de compra.
-- **Compra de NFTs**: Mercado descentralizado donde se pueden adquirir NFTs existentes si se cumple con el precio mínimo requerido.
-- **Transferencia**: Envío directo de NFTs entre cuentas de la red.
-- **Historial de Transacciones**: Visualización completa de la actividad en la red gracias al `NFTAPIPlugin`.
-
-## Arquitectura Técnica
-
-- **Lisk SDK**: Utilizado para construir la lógica on-chain mediante módulos y activos personalizados.
-- **NFTAPIPlugin**: Un plugin que expone una API REST adicional en el puerto 8080 para facilitar la consulta de datos históricos y estados de los tokens.
-- **React & Material-UI**: Utilizados para una interfaz de usuario fluida y receptiva.
-
-## Contribuir
-
-Si deseas contribuir a este proyecto, por favor abre un Pull Request o reporta cualquier problema en la sección de Issues.
-
----
-Proyecto desarrollado como parte del ecosistema Lisk.
+Este repo es solo frontend estatico. No valida identidad de Telegram en backend porque no tiene backend. Para un uso real con clientes se debe validar `initData` del Web App en un servidor o Apps Script separado.
