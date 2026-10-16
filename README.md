@@ -1,11 +1,11 @@
 # WALL-E F1
 
-**v1.0.0** · Mini App estatica para Telegram: simulador de estrategia de Formula 1 de la
+**v1.1.0** · Mini App estatica para Telegram: simulador de estrategia de Formula 1 de la
 temporada **2026**. Sin backend ni servidor: todo corre en el navegador y el progreso se
 guarda en `localStorage`.
 
 - **Temporada:** 2026
-- **Version:** 1.0.0
+- **Version:** 1.1.0
 - **Tipo:** frontend estatico (HTML + CSS + JavaScript, sin build)
 
 ## Que es
@@ -18,10 +18,20 @@ descubres si tus decisiones (llantas y vuelta de parada) fueron las correctas.
 1. Elige **circuito** (6 disponibles, carreras de **24 vueltas**).
 2. Elige **equipo**. Los 4 rinden igual: solo cambian las condiciones.
 3. Revisa la **clasificacion** de los 8 pilotos y el **clima** pronosticado.
-4. Define la **estrategia**: dos juegos de llantas (salida y cambio) y en que vuelta entra a
-   boxes cada piloto.
+4. Define la **estrategia de cada piloto por separado**: llanta de salida, llanta de cambio y
+   vuelta de entrada a boxes. Hay un boton para copiar la estrategia del otro piloto.
 5. Mira la **carrera** en la pista 2D con controles de velocidad **1x a 4x** (o saltar al final).
 6. Ve el **resultado**: si acertaste la estrategia y en que puesto terminaste.
+
+## Estrategia individual por piloto
+
+Cada piloto del equipo tiene su propia estrategia, como en la F1 real:
+
+- **Llanta de salida** y **llanta de cambio** independientes por piloto.
+- **Vuelta de parada** independiente por piloto.
+- **Pestanas por piloto** en la pantalla de estrategia (para no saturar la pantalla en movil).
+- Boton **"Copiar estrategia del otro piloto"** si quieres duplicarla rapido.
+- Resumen visible de ambos pilotos: `NOR M→D · V12 | PIA S→D · V7`.
 
 ## Pantalla de carrera (HUD)
 
@@ -91,7 +101,7 @@ URL esperada: `https://alexeiiw.github.io/gerty-retrosec-miniapp/`
 
 ### Cache-busting
 
-Los assets se referencian con `?v=3` en `index.html` para forzar la recarga en el WebView de
+Los assets se referencian con `?v=4` en `index.html` para forzar la recarga en el WebView de
 Telegram. **Sube ese numero al publicar cambios** de `style.css` o de los `.js`.
 
 ## Desarrollo

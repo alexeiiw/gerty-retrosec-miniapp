@@ -5,6 +5,20 @@ Todas las versiones notables de **WALL-E F1**.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y el versionado [SemVer](https://semver.org/lang/es/).
 
+## [1.1.0] - 2026-10-16
+
+### Agregado
+- **Estrategia individual por piloto**: cada piloto tiene su propia llanta de salida, llanta de
+  cambio y vuelta de parada.
+- Pestanas por piloto en la pantalla de estrategia (evita saturar la pantalla en movil).
+- Boton "Copiar estrategia del otro piloto".
+- Resumen visible de ambos pilotos en la pantalla de estrategia.
+
+### Cambiado
+- El estado de estrategia pasa de compartido a un arreglo con un objeto por piloto.
+- `sim.js` lee la estrategia por `driverIdx` en vez de una compartida.
+- Cache-busting actualizado a `?v=4`.
+
 ## [1.0.0] - 2026-10-16
 
 ### Agregado

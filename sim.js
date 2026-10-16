@@ -126,10 +126,9 @@ const WalleSim = (() => {
     const ai = pickAiStrategy(weather);
     for (const car of cars) {
       if (car.isPlayer) {
-        const c1 = strategy.compounds[0];
-        const c2 = strategy.compounds[1];
-        car.compounds = [c1, c2];
-        car.pitLap = Math.max(1, Math.min(track.laps, strategy.pitLaps[car.driverIdx] || 12));
+        const s = strategy[car.driverIdx] || strategy[0];
+        car.compounds = [s.compounds[0], s.compounds[1]];
+        car.pitLap = Math.max(1, Math.min(track.laps, s.pitLap || 12));
       } else {
         car.compounds = ai.compounds.slice();
         car.pitLap = ai.pitLap;

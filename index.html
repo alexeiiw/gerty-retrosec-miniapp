@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>WALL-E F1</title>
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -42,7 +42,9 @@
     <section class="screen" id="screen-strategy">
       <button class="back" data-back="qualy">&larr; Clasificación</button>
       <h2 class="screen-title">Estrategia</h2>
-      <p class="screen-sub">Elige dos juegos de llantas y en qué vuelta entra cada piloto.</p>
+      <p class="screen-sub">Elige llantas y vuelta de parada para cada piloto por separado.</p>
+
+      <div class="driver-tabs" id="driverTabs"></div>
 
       <div class="strat-block">
         <p class="strat-label">Llanta de salida</p>
@@ -53,6 +55,9 @@
         <div class="chips" id="compoundEnd"></div>
       </div>
       <div id="pitLaps"></div>
+
+      <button class="ghost big" id="copyStrategy">Copiar estrategia del otro piloto</button>
+      <div class="strat-summary" id="stratSummary"></div>
 
       <button class="primary big" id="startRace">Iniciar carrera</button>
     </section>
@@ -88,8 +93,8 @@
     <footer class="app-footer" id="appFooter">WALL-E F1</footer>
   </main>
 
-  <script src="data.js?v=3"></script>
-  <script src="sim.js?v=3"></script>
-  <script src="app.js?v=3"></script>
+  <script src="data.js?v=4"></script>
+  <script src="sim.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

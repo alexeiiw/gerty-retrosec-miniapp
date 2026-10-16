@@ -5,7 +5,11 @@ const state = {
   track: null,
   team: null,
   seed: "",
-  strategy: { compounds: ["medium", "hard"], pitLaps: [12, 12] },
+  strategy: [
+    { compounds: ["medium", "hard"], pitLap: 12 },
+    { compounds: ["medium", "hard"], pitLap: 12 }
+  ],
+  driverIdx: 0,
   preview: null,
   result: null,
   stats: { races: 0, wins: 0, podiums: 0, lastTrack: null, lastTeam: null, bestByTrack: {} }
@@ -85,10 +89,18 @@ function renderTeams() {
 function selectTeam(team) {
   state.team = team;
   state.seed = urlSeed() || newSeed();
-  state.strategy = { compounds: ["medium", "hard"], pitLaps: [12, 12] };
+  resetStrategy();
   state.preview = WalleSim.preview(state.seed, state.track, team.id);
   renderQualy();
   showScreen("qualy");
+}
+
+function resetStrategy() {
+  state.strategy = [
+    { compounds: ["medium", "hard"], pitLap: 12 },
+    { compounds: ["medium", "hard"], pitLap: 12 }
+  ];
+  state.driverIdx = 0;
 }
 
 // ---------- Pantalla: clasificacion y clima ----------
@@ -131,35 +143,56 @@ function fmtTime(sec) {
 
 // ---------- Pantalla: estrategia ----------
 function renderStrategy() {
+  renderDriverTabs();
+  renderActiveStrategy();
+  renderStratSummary();
+}
+
+function renderDriverTabs() {
+  const box = el("driverTabs");
+  box.innerHTML = "";
+  state.team.drivers.forEach((driver, idx) => {
+    const btn = document.createElement("button");
+    btn.className = "driver-tab" + (idx === state.driverIdx ? " active" : "");
+    btn.innerHTML = `<b>${driver.short}</b><span>${driver.name.split(" ").slice(-1)[0]}</span>`;
+    btn.addEventListener("click", () => {
+      state.driverIdx = idx;
+      renderStrategy();
+    });
+    box.appendChild(btn);
+  });
+}
+
+function renderActiveStrategy() {
+  const s = state.strategy[state.driverIdx];
   const startBox = el("compoundStart");
   const endBox = el("compoundEnd");
   startBox.innerHTML = "";
   endBox.innerHTML = "";
-
   for (const c of COMPOUNDS) {
     startBox.appendChild(chip(c, "start"));
     endBox.appendChild(chip(c, "end"));
   }
+  markChips();
 
   const pitBox = el("pitLaps");
   pitBox.innerHTML = "";
-  state.team.drivers.forEach((driver, idx) => {
-    const row = document.createElement("div");
-    row.className = "pit-row";
-    row.innerHTML =
-      `<span><span class="pit-name">${driver.name}</span><span class="pit-sub">Entra a boxes en la vuelta</span></span>` +
-      `<span class="stepper"><button data-dir="-1" data-idx="${idx}">−</button>` +
-      `<span class="val" id="pitVal${idx}">${state.strategy.pitLaps[idx]}</span>` +
-      `<button data-dir="1" data-idx="${idx}">+</button></span>`;
-    pitBox.appendChild(row);
-  });
-
+  const row = document.createElement("div");
+  row.className = "pit-row";
+  row.innerHTML =
+    `<span><span class="pit-name">${state.team.drivers[state.driverIdx].name}</span>` +
+    `<span class="pit-sub">Entra a boxes en la vuelta</span></span>` +
+    `<span class="stepper"><button data-dir="-1">−</button>` +
+    `<span class="val" id="pitVal">${s.pitLap}</span>` +
+    `<button data-dir="1">+</button></span>`;
+  pitBox.appendChild(row);
   pitBox.querySelectorAll("button").forEach((b) => {
     b.addEventListener("click", () => {
-      const idx = Number(b.dataset.idx);
       const dir = Number(b.dataset.dir);
-      state.strategy.pitLaps[idx] = Math.max(1, Math.min(RACE_LAPS, state.strategy.pitLaps[idx] + dir));
-      el("pitVal" + idx).textContent = state.strategy.pitLaps[idx];
+      const cur = state.strategy[state.driverIdx];
+      cur.pitLap = Math.max(1, Math.min(RACE_LAPS, cur.pitLap + dir));
+      el("pitVal").textContent = cur.pitLap;
+      renderStratSummary();
     });
   });
 }
@@ -170,20 +203,42 @@ function chip(compound, kind) {
   btn.dataset.id = compound.id;
   btn.innerHTML = `<span class="dot" style="background:${compound.color}"></span>${compound.abbr}<small>${compound.name}</small>`;
   btn.addEventListener("click", () => {
-    const current = kind === "start" ? state.strategy.compounds[0] : state.strategy.compounds[1];
-    if (current === compound.id) return;
-    if (kind === "start") state.strategy.compounds[0] = compound.id;
-    else state.strategy.compounds[1] = compound.id;
+    const s = state.strategy[state.driverIdx];
+    const slot = kind === "start" ? 0 : 1;
+    if (s.compounds[slot] === compound.id) return;
+    s.compounds[slot] = compound.id;
     markChips();
+    renderStratSummary();
   });
   return btn;
 }
 
 function markChips() {
+  const s = state.strategy[state.driverIdx];
   document.querySelectorAll("#compoundStart .chip").forEach((c) =>
-    c.classList.toggle("active", c.dataset.id === state.strategy.compounds[0]));
+    c.classList.toggle("active", c.dataset.id === s.compounds[0]));
   document.querySelectorAll("#compoundEnd .chip").forEach((c) =>
-    c.classList.toggle("active", c.dataset.id === state.strategy.compounds[1]));
+    c.classList.toggle("active", c.dataset.id === s.compounds[1]));
+}
+
+function renderStratSummary() {
+  el("stratSummary").innerHTML = state.team.drivers.map((d, idx) => {
+    const s = state.strategy[idx];
+    const c1 = WalleSim.compoundById(s.compounds[0]).abbr;
+    const c2 = WalleSim.compoundById(s.compounds[1]).abbr;
+    const you = idx === state.driverIdx ? " you" : "";
+    return `<span class="strat-chip${you}">${d.short} ${c1}→${c2} · V${s.pitLap}</span>`;
+  }).join("");
+}
+
+function copyStrategy() {
+  const other = state.driverIdx === 0 ? 1 : 0;
+  state.strategy[state.driverIdx] = {
+    compounds: state.strategy[other].compounds.slice(),
+    pitLap: state.strategy[other].pitLap
+  };
+  renderActiveStrategy();
+  renderStratSummary();
 }
 
 // ---------- Pantalla: carrera ----------
@@ -440,9 +495,10 @@ function bindEvents() {
 
   el("toStrategy").addEventListener("click", () => {
     renderStrategy();
-    markChips();
     showScreen("strategy");
   });
+
+  el("copyStrategy").addEventListener("click", copyStrategy);
 
   el("startRace").addEventListener("click", startRace);
 
