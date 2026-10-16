@@ -285,6 +285,17 @@ h1 {
 
 .stats-line { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
 
+.app-footer {
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.03em;
+}
+
 @media (max-width: 360px) {
   .tiles-track { grid-template-columns: 1fr; }
   .chips { grid-template-columns: repeat(5, 1fr); }

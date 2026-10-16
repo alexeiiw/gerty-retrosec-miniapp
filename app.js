@@ -489,4 +489,5 @@ loadState();
 setupTelegram();
 bindEvents();
 renderTracks();
+el("appFooter").textContent = `WALL-E F1 v${APP_VERSION} · Temporada ${SEASON} · sin backend`;
 showScreen("track");

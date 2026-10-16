@@ -1,6 +1,7 @@
 // WALL-E F1 - Datos estaticos (temporada 2026)
 // Todo es deterministico: nada de backend, todo vive en el navegador.
 
+const APP_VERSION = "1.0.0";
 const SEASON = 2026;
 
 const TEAMS = [
