@@ -2,65 +2,92 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gerty Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>WALL-E F1</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <main class="shell">
-    <section class="hero">
+  <main class="app">
+    <header class="topbar">
       <div>
-        <p class="eyebrow">Telegram Mini App</p>
-        <h1>Gerty Games</h1>
-        <p class="subtitle">RetroSec Lab y Cripto Clasico en una Mini App estatica para Telegram.</p>
+        <p class="eyebrow">Temporada 2026</p>
+        <h1>WALL-E F1</h1>
       </div>
-      <div class="badge" id="userBadge">LOCAL</div>
+      <div class="badge" id="modeBadge">LOCAL</div>
+    </header>
+
+    <section class="screen active" id="screen-track">
+      <h2 class="screen-title">Elige circuito</h2>
+      <p class="screen-sub">24 vueltas. Cada pista tiene su clima y su desgaste.</p>
+      <div class="tiles tiles-track" id="trackList"></div>
+      <p class="stats-line" id="statsLine"></p>
     </section>
 
-    <section class="game-switch" aria-label="Selector de juego">
-      <button class="active" data-game="retrosec">RetroSec Lab</button>
-      <button data-game="cripto">Cripto Clasico</button>
+    <section class="screen" id="screen-team">
+      <button class="back" data-back="track">&larr; Circuito</button>
+      <h2 class="screen-title" id="teamTrackName">Elige equipo</h2>
+      <p class="screen-sub">Los 4 equipos rinden igual. Solo cambian las condiciones.</p>
+      <div class="tiles tiles-team" id="teamList"></div>
     </section>
 
-    <section class="status-grid" aria-label="Estado del juego">
-      <div class="card"><span id="primaryLabel">Mision</span><strong id="missionLabel">1/5</strong></div>
-      <div class="card"><span id="secondaryLabel">Completadas</span><strong id="solvedLabel">0</strong></div>
-      <div class="card"><span>Modo</span><strong id="modeLabel">Static</strong></div>
+    <section class="screen" id="screen-qualy">
+      <button class="back" data-back="team">&larr; Equipo</button>
+      <h2 class="screen-title">Clasificación y clima</h2>
+      <div class="weather-card" id="weatherCard"></div>
+      <div class="qualy-list" id="qualyList"></div>
+      <button class="primary big" id="toStrategy">Definir estrategia</button>
     </section>
 
-    <section class="terminal" aria-label="Terminal RetroSec">
-      <div class="terminal-top">
-        <span class="dot red"></span>
-        <span class="dot amber"></span>
-        <span class="dot green"></span>
-        <span class="terminal-title" id="terminalTitle">retrosec@gerty:~</span>
+    <section class="screen" id="screen-strategy">
+      <button class="back" data-back="qualy">&larr; Clasificación</button>
+      <h2 class="screen-title">Estrategia</h2>
+      <p class="screen-sub">Elige dos juegos de llantas y en qué vuelta entra cada piloto.</p>
+
+      <div class="strat-block">
+        <p class="strat-label">Llanta de salida</p>
+        <div class="chips" id="compoundStart"></div>
       </div>
-      <pre id="output" class="output" aria-live="polite"></pre>
-      <form id="commandForm" class="prompt">
-        <span>$</span>
-        <input id="commandInput" autocomplete="off" spellcheck="false" placeholder="Escribe: ls, cat readme.txt, submit CLAVE">
-        <button type="submit">Run</button>
-      </form>
+      <div class="strat-block">
+        <p class="strat-label">Llanta de cambio (pit stop)</p>
+        <div class="chips" id="compoundEnd"></div>
+      </div>
+      <div id="pitLaps"></div>
+
+      <button class="primary big" id="startRace">Iniciar carrera</button>
     </section>
 
-    <section class="actions" aria-label="Comandos rapidos">
-      <button data-cmd="status">status</button>
-      <button data-cmd="ls">ls</button>
-      <button data-cmd="cat readme.txt">cat readme.txt</button>
-      <button data-cmd="strings cartridge.gb">strings</button>
-      <button data-cmd="grep KEY cartridge.gb">grep KEY</button>
-      <button data-cmd="pista">pista</button>
-      <button data-cmd="submit CLAVE">submit</button>
-      <button data-cmd="reset">reset</button>
+    <section class="screen" id="screen-race">
+      <div class="hud">
+        <div class="hud-tile"><span>Vuelta</span><strong id="hudLap">1/24</strong></div>
+        <div class="hud-tile"><span>Clima</span><strong id="hudWeather">Seco</strong></div>
+      </div>
+      <div class="hud drivers" id="hudDrivers"></div>
+      <canvas id="trackCanvas" width="640" height="640"></canvas>
+      <div class="controls">
+        <button id="playBtn" class="ctrl play">▶</button>
+        <div class="speeds">
+          <button class="ctrl speed active" data-speed="1">1x</button>
+          <button class="ctrl speed" data-speed="2">2x</button>
+          <button class="ctrl speed" data-speed="3">3x</button>
+          <button class="ctrl speed" data-speed="4">4x</button>
+        </div>
+        <button id="skipBtn" class="ctrl skip">Fin</button>
+      </div>
     </section>
 
-    <section class="submit-panel">
-      <button id="resetProgress" class="primary">Reiniciar progreso</button>
-      <p>El avance se guarda localmente en este dispositivo.</p>
+    <section class="screen" id="screen-result">
+      <h2 class="screen-title" id="resultTitle">Resultado</h2>
+      <div class="result-banner" id="resultBanner"></div>
+      <div class="final-list" id="finalList"></div>
+      <div class="summary" id="summaryBox"></div>
+      <button class="primary big" id="againBtn">Otra carrera (mismo circuito)</button>
+      <button class="ghost big" id="changeTrackBtn">Cambiar circuito</button>
     </section>
   </main>
 
+  <script src="data.js"></script>
+  <script src="sim.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
